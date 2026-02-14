@@ -1,0 +1,123 @@
+Test Results
+============
+
+--- Login ---
+Note: Unnecessary use of -X or --request, POST is already inferred.
+* Host localhost:3000 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:3000...
+* Connected to localhost (::1) port 3000
+> POST /auth/login HTTP/1.1
+> Host: localhost:3000
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 58
+> 
+} [58 bytes data]
+* upload completely sent off: 58 bytes
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 47
+< ETag: W/"2f-mw+LF/f4DsIMTA3bpf4RA6Io/BA"
+< Date: Sat, 14 Feb 2026 05:14:47 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+< 
+{ [47 bytes data]
+100   105  100    47  100    58   2129   2627 --:--:-- --:--:-- --:--:--  4772
+* Connection #0 to host localhost left intact
+{"message":"OTP sent","loginSessionId":"82h0b"}
+--- Verify OTP ---
+Note: Unnecessary use of -X or --request, POST is already inferred.
+* Host localhost:3000 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:3000...
+* Connected to localhost (::1) port 3000
+> POST /auth/verify-otp HTTP/1.1
+> Host: localhost:3000
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 41
+> 
+} [41 bytes data]
+* upload completely sent off: 41 bytes
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+* Added cookie session_token="82h0b" for domain localhost, path /, expire 1771046997
+< Set-Cookie: session_token=82h0b; Max-Age=900; Path=/; Expires=Sat, 14 Feb 2026 05:29:57 GMT; HttpOnly
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 46
+< ETag: W/"2e-KdmQjg2XxCdBvVbpfmE1jFHcVkA"
+< Date: Sat, 14 Feb 2026 05:14:57 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+< 
+{ [46 bytes data]
+100    87  100    46  100    41   8351   7443 --:--:-- --:--:-- --:--:-- 17400
+* Connection #0 to host localhost left intact
+{"message":"OTP verified","sessionId":"82h0b"}
+--- Get Token ---
+* Host localhost:3000 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:3000...
+* Connected to localhost (::1) port 3000
+> POST /auth/token HTTP/1.1
+> Host: localhost:3000
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Cookie: session_token=82h0b
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 233
+< ETag: W/"e9-s0mbwYB0jFtJoKQTj7xLAzXozgM"
+< Date: Sat, 14 Feb 2026 05:14:58 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+< 
+{ [233 bytes data]
+100   233  100   233    0     0  41006      0 --:--:-- --:--:-- --:--:-- 46600
+* Connection #0 to host localhost left intact
+{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFnZW50QGFudGlncmF2aXR5LmNvbSIsInNlc3Npb25JZCI6IjgyaDBiIiwiaWF0IjoxNzcxMDQ2MDk4LCJleHAiOjE3NzEwNDY5OTh9.MqXA9_rMaphb-EgxZRCYk2JrVRqhnEsPXmPPWMa46Mo","expires_in":900}
+--- Access Protected Route ---
+* Host localhost:3000 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:3000...
+* Connected to localhost (::1) port 3000
+> GET /protected HTTP/1.1
+> Host: localhost:3000
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFnZW50QGFudGlncmF2aXR5LmNvbSIsInNlc3Npb25JZCI6IjgyaDBiIiwiaWF0IjoxNzcxMDQ2MDk4LCJleHAiOjE3NzEwNDY5OTh9.MqXA9_rMaphb-EgxZRCYk2JrVRqhnEsPXmPPWMa46Mo
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 202
+< ETag: W/"ca-w4DowvnG2SZEJlWlwN1A9A5+0sU"
+< Date: Sat, 14 Feb 2026 05:15:10 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+< 
+{ [202 bytes data]
+100   202  100   202    0     0  31057      0 --:--:-- --:--:-- --:--:-- 33666
+* Connection #0 to host localhost left intact
+{"message":"Access granted","user":{"email":"agent@antigravity.com","sessionId":"82h0b","iat":1771046098,"exp":1771046998},"success_flag":"FLAG-YWdlbnRAYW50aWdyYXZpdHkuY29tX0NPTVBMRVRFRF9BU1NJR05NRU5U"}
